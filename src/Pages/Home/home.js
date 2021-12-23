@@ -277,7 +277,100 @@ function Home() {
               </Grid>
             )}
           </Grid>
+          {/* // button
+          // organised events
+          // profile
+          // joined events
+          // cancelled events
+          // ditched events  */}
+          {/* <Grid
+            container
+            direction="column"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Profile
+              </Button>
+            </Grid>
+          </Grid> */}
         </Paper>
+
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+            <Button variant="contained" type="submit">
+              Profile
+            </Button>
+          </Grid>
+          <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+            <Button variant="contained" type="submit">
+              Organised Events
+            </Button>
+          </Grid>
+          <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+            <Button variant="contained" type="submit">
+              Joined Events
+            </Button>
+          </Grid>
+          <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+            <Button variant="contained" type="submit">
+              Cancelled Events
+            </Button>
+          </Grid>
+          <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+            <Button variant="contained" type="submit">
+              Ditched Events
+            </Button>
+          </Grid>
+        </Grid>
+
+        {/* <Grid alignItems="center" container spacing={1}>
+          <Grid item>
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Profile
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid item>
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Organised Events
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid item>
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Joined Events
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid minWidth="150px" item>
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Cancelled Events
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid item>
+            <Grid marginTop="15px" item xs={10} sm={6} md={4}>
+              <Button variant="contained" type="submit">
+                Ditched Events
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
