@@ -309,7 +309,7 @@ function Home() {
             </Button>
           </Grid>
           <Grid marginTop="15px" item xs={10} sm={6} md={4}>
-            <Button variant="contained" type="submit">
+            <Button href="/organizedEvents" variant="contained" type="submit">
               Organized Events
             </Button>
           </Grid>

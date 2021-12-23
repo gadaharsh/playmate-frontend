@@ -23,7 +23,7 @@ function Navbar(props) {
         </Fragment>
         {authenticated ? (
           <Fragment>
-            <Button color="inherit">
+            <Button href="/" color="inherit">
               Events
             </Button>
           </Fragment>
