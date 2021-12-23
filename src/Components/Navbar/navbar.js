@@ -12,7 +12,7 @@ function Navbar(props) {
   React.useEffect(() => {
     console.log(authenticated, "player auth");
   }, [authenticated]);
-
+  
   const history = useHistory();
 
   return (
