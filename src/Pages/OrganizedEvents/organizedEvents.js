@@ -15,16 +15,15 @@ import {
 } from "@mui/material";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
-import "./organisedEvents.css";
+import "./organizedEvents.css";
 import { useSelector } from "react-redux";
 import useWindowDimensions from "../../Components/useWindowDimensions";
 import { SIZE } from "../../Components/ConstantData/apiConstants";
 import store from "../../redux/store";
 import { getEventsNearMe } from "../../redux/events/eventActions";
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
-function OrganisedEvents() {
+
+function OrganizedEvents() {
   const authenticated = useSelector((state) => state.player.authenticated);
   const user = useSelector((state) => state.player.user);
   const { height, width } = useWindowDimensions();
@@ -54,7 +53,7 @@ function OrganisedEvents() {
             >
               {" "}
               <Typography variant="h4" gutterBottom component="div">
-                Organised Events
+                Organized Events
               </Typography>
               <h4>Hmmmmm</h4>
               <h4>Hmmmmm</h4>
@@ -194,4 +193,4 @@ function OrganisedEvents() {
   );
 }
 
-export default OrganisedEvents;
+export default OrganizedEvents;

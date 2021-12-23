@@ -310,7 +310,7 @@ function Home() {
           </Grid>
           <Grid marginTop="15px" item xs={10} sm={6} md={4}>
             <Button variant="contained" type="submit">
-              Organised Events
+              Organized Events
             </Button>
           </Grid>
           <Grid marginTop="15px" item xs={10} sm={6} md={4}>

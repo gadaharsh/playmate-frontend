@@ -12,7 +12,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { setPlayerData } from "./redux/player/playerActions";
 import CreateEvent from "./Pages/createEvent/createEvent";
-import OrganisedEvents from "./Pages/OrganisedEvents/organisedEvents";
+import OrganizedEvents from "./Pages/OrganizedEvents/organizedEvents";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlz4RUWLWoNRcoqwSXtZCZtvpABQ6eY-k",
@@ -52,8 +52,8 @@ function App() {
               <Route path="/create">
                 <CreateEvent />
               </Route>
-              <Route path="/organisedEvents">
-                <OrganisedEvents />
+              <Route path="/organizedEvents">
+                <OrganizedEvents />
               </Route>
             </Switch>
           </Router>
