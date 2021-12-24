@@ -140,9 +140,21 @@
   background: white;
   align-items: center;
 }
-/* Gender selection css */
+.GenderSelection {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin:0 auto;
+  padding: 1rem;
+}
 
-/* .GenderSelection input[name="gender"] {
+.GenderSelection img{
+  width: 45px;
+  height: 45px;
+}
+/* Gender selection css */
+/* 
+.GenderSelection input[name="gender"] {
 	display: none;
 	&[value="male"]:checked {
 		~ .genderIcon {

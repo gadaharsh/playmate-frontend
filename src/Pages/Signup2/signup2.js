@@ -10,7 +10,7 @@ import {
   signInWithPhoneNumber,
   PhoneAuthProvider,
 } from "firebase/auth";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, FormControl } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { FormLabel } from "@mui/material";
@@ -19,8 +19,13 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setPlayerData } from "../../redux/player/playerActions";
 import store from "../../redux/store";
+import useWindowDimensions from "../../Components/useWindowDimensions";
+import male from "../../images/maleGender.png";
+import female from "../../images/femaleGender.png";
+
 
 function Signup() {
+  const { height, width } = useWindowDimensions();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
@@ -220,18 +225,32 @@ function Signup() {
               <label className="errorLabel">Name must be valid !</label>
             </div>
           )}
-          <div className="GenderSelection">
+          <div className="signupSpace GenderSelection">
             <span>
-              <label for="maleGender">Male</label>
-              <input id="maleGender" type="radio" name="gender" value="male" />
-              <input
-                id="femaleGender"
-                type="radio"
-                name="gender"
-                value="female"
+              <img
+                for="maleGender"
+                src={male}
+                style={{
+                  // height: width > 450 ? width / 8 : width / 4.5,
+                  // width: width > 450 ? width / 8 : width / 4.5,
+                  // borderRadius: width > 450 ? width / 18 : width / 9,
+                  // resize: "cover",
+                }}
               />
-              <i class="genderIcon"></i>
-              <label for="femaleGender">Female</label>
+              <input className="Input" id="maleGender" type="radio" name="gender" value="male" />
+              
+              {/* <i class="genderIcon"></i> */}
+                <img
+                for="femaleGender"
+                src={female}
+                style={{
+                  // height: width > 450 ? width / 8 : width / 4.5,
+                  // width: width > 450 ? width / 8 : width / 4.5,
+                  // borderRadius: width > 450 ? width / 18 : width / 9,
+                  // resize: "cover",
+                }}
+              />
+              <input className="Input" id="femaleGender" type="radio" name="gender" value="female"/>            
             </span>
           </div>
           <div class="Input">
