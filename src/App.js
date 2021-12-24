@@ -52,7 +52,7 @@ function App() {
               <Route path="/create">
                 <CreateEvent />
               </Route>
-              <Route path="/organizedEvents">
+              <Route path="/organized">
                 <OrganizedEvents />
               </Route>
             </Switch>
