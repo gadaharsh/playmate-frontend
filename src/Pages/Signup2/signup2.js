@@ -218,6 +218,22 @@ function Signup() {
               <label className="errorLabel">Name must be valid !</label>
             </div>
           )}
+          <div class="Input">
+            <input
+              onChange={handleChangePhone}
+              type="text"
+              id="contact"
+              class="Input-text"
+              placeholder="10 digit Mobile Number"
+            ></input>
+          </div>
+          {phoneerror && (
+            <div>
+              <label className="errorLabel">
+                Enter a valid Contact Number !
+              </label>
+            </div>
+          )}
           <div className="signupSpace GenderSelection">
             <span>
               <img
@@ -246,22 +262,6 @@ function Signup() {
               <input className="Input" id="femaleGender" type="radio" name="gender" value="female"/>            
             </span>
           </div>
-          <div class="Input">
-            <input
-              onChange={handleChangePhone}
-              type="text"
-              id="contact"
-              class="Input-text"
-              placeholder="10 digit Mobile Number"
-            ></input>
-          </div>
-          {phoneerror && (
-            <div>
-              <label className="errorLabel">
-                Enter a valid Contact Number !
-              </label>
-            </div>
-          )}
           <div style={{ marginTop: 15 }} id="recaptcha-container"></div>
           <div style={{ marginTop: 25 }}>
             <Button
