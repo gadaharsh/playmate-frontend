@@ -14,6 +14,9 @@ import { setPlayerData } from "./redux/player/playerActions";
 import CreateEvent from "./Pages/createEvent/createEvent";
 import OrganizedEvents from "./Pages/OrganizedEvents/organizedEvents";
 import JoinedEvents from "./Pages/JoinedEvents/joinedEvents";
+import BackedOutEvents from "./Pages/BackedOutEvents/backedOutEvents";
+import RejectedEvents from "./Pages/RejectedEvents/rejectedEvents";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlz4RUWLWoNRcoqwSXtZCZtvpABQ6eY-k",
@@ -58,6 +61,12 @@ function App() {
               </Route>
               <Route path="/joined">
                 <JoinedEvents />
+              </Route>
+              <Route path="/backedOut">
+                <BackedOutEvents />
+              </Route>
+              <Route path="/rejected">
+                <RejectedEvents />
               </Route>
             </Switch>
           </Router>
