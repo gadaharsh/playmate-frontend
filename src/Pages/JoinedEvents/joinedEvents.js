@@ -33,7 +33,7 @@ function JoinedEvents(props) {
   const joinedEvents = useSelector((state) => state.event.joinedEvents);
 
   useEffect(() => {
-    //console.log(joinedEvents);
+    //console.log(JoinedEvents);
     setFetchedEvents(joinedEvents);
   }, [joinedEvents]);
 

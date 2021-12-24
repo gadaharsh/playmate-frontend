@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./signup2.css";
@@ -10,7 +10,7 @@ import {
   signInWithPhoneNumber,
   PhoneAuthProvider,
 } from "firebase/auth";
-import { CircularProgress, FormControl } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { FormLabel } from "@mui/material";
@@ -38,21 +38,21 @@ function Signup() {
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [invalidotp, setInvalidotp] = useState(false);
+  const [recaptcha, setRecaptcha] = useState(null)
 
   const configureCaptcha = () => {
     const auth = getAuth();
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          onSignInSubmit();
-        },
-      },
-      auth
-    );
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      size: 'normal',
+      callback: (res) => {
+        console.log(res, 'hmmmmmmmmm')
+      }
+    }, auth);
   };
+
+  useEffect(() => {
+    configureCaptcha()
+  }, [])
 
   const onSignInSubmit = (e) => {
     e.preventDefault();
@@ -76,13 +76,11 @@ function Signup() {
     // }
 
     setOtpLoading(true);
-    configureCaptcha();
     const auth = getAuth();
     const phoneNumber = "+91" + phone;
     console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     console.log(appVerifier);
-    console.log("hmmmm");
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
@@ -96,6 +94,7 @@ function Signup() {
       })
       .catch((error) => {
         console.log("Otp not sent !");
+        console.log(error);
         // Error; SMS not sent
         // ...
         setOtpLoading(false);
@@ -144,8 +143,8 @@ function Signup() {
           .then((result) => {
             console.log(result.data);
             localStorage.setItem("playerToken", result.data.token);
-            store.dispatch(setPlayerData(result.data.token));
-            history.push({ pathname: "/" });
+            store.dispatch(setPlayerData(result.data.token))
+            history.push({ pathname: '/' })
             setVerifying(false);
           })
           .catch((err) => {
@@ -163,7 +162,7 @@ function Signup() {
   };
 
   return (
-    <div className="signupContainer">
+    <div id="signup-container" className="signupContainer">
       {otpSent ? (
         <div className="signupSpace">
           <div className="logoStyle">
@@ -182,13 +181,7 @@ function Signup() {
             />
           </div>
           {invalidotp && (
-            <div
-              style={{
-                alignItems: "center",
-                textAlign: "center",
-                marginTop: 9,
-              }}
-            >
+            <div style={{ alignItems: 'center', textAlign: 'center', marginTop: 9 }}>
               <label className="errorLabel">Invalid OTP !</label>
             </div>
           )}
@@ -269,6 +262,7 @@ function Signup() {
               </label>
             </div>
           )}
+          <div style={{ marginTop: 15 }} id="recaptcha-container"></div>
           <div style={{ marginTop: 25 }}>
             <Button
               id="sign-in-button"
