@@ -19,14 +19,21 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setPlayerData } from "../../redux/player/playerActions";
 import store from "../../redux/store";
+import useWindowDimensions from "../../Components/useWindowDimensions";
+import male from "../../images/maleGender.png";
+import female from "../../images/femaleGender.png";
+
 
 function Signup() {
+  const { height, width } = useWindowDimensions();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
   const [otpSendLoading, setOtpLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [nameerror, setNameerror] = useState(false);
   const [phoneerror, setPhoneerror] = useState(false);
+  const [gendererror, setGendererror] = useState(false);
   const history = useHistory();
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
@@ -61,6 +68,13 @@ function Signup() {
     } else {
       setPhoneerror(false);
     }
+    // if (gender.length !== 10) {
+    //   setGendererror(true);
+    //   return;
+    // } else {
+    //   setGendererror(false);
+    // }
+
     setOtpLoading(true);
     const auth = getAuth();
     const phoneNumber = "+91" + phone;
@@ -92,6 +106,7 @@ function Signup() {
     console.log("heree");
     console.log(phone);
     console.log(name);
+    // console.log(gender);
     onSignInSubmit();
   };
 
@@ -101,6 +116,11 @@ function Signup() {
   }
 
   function handleChangePhone(e) {
+    console.log(e.target.value);
+    setPhone(e.target.value);
+  }
+
+  function handleChangeGender(e) {
     console.log(e.target.value);
     setPhone(e.target.value);
   }
@@ -214,6 +234,34 @@ function Signup() {
               </label>
             </div>
           )}
+          <div className="signupSpace GenderSelection">
+            <span>
+              <img
+                for="maleGender"
+                src={male}
+                style={{
+                  // height: width > 450 ? width / 8 : width / 4.5,
+                  // width: width > 450 ? width / 8 : width / 4.5,
+                  // borderRadius: width > 450 ? width / 18 : width / 9,
+                  // resize: "cover",
+                }}
+              />
+              <input className="Input" id="maleGender" type="radio" name="gender" value="male" />
+              
+              {/* <i class="genderIcon"></i> */}
+                <img
+                for="femaleGender"
+                src={female}
+                style={{
+                  // height: width > 450 ? width / 8 : width / 4.5,
+                  // width: width > 450 ? width / 8 : width / 4.5,
+                  // borderRadius: width > 450 ? width / 18 : width / 9,
+                  // resize: "cover",
+                }}
+              />
+              <input className="Input" id="femaleGender" type="radio" name="gender" value="female"/>            
+            </span>
+          </div>
           <div style={{ marginTop: 15 }} id="recaptcha-container"></div>
           <div style={{ marginTop: 25 }}>
             <Button
