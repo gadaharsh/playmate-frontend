@@ -77,30 +77,6 @@ function PlayerProfile(props) {
     <Grid container padding="15px">
       {!loading &&
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6} lg={4}>
-            <Grid container>
-              <Grid item xs={12} sm={6} md={12}>
-                <ProfileCard user={playerDetails} />
-              </Grid>
-              <Grid item xs={12} sm={6} md={12}>
-                <HorizontalBarChart label={labels} value={values} />
-              </Grid>
-            </Grid>
-          </Grid>
-          {/* <Grid item xs={12} sm={6} md={4}>
-            <ProfileCard />
-          </Grid> */}
-          <Grid item xs={12} sm={8} md={6} lg={4}>
-            <PieChart label={labels1} value={values1} colors={colors} />
-          </Grid>
-          {user._id &&
-            (user._id === match.id) && <Grid item xs={12} sm={8} md={6} lg={4}>
-              <PlayerCardExtra />
-            </Grid>
-          }
-          {/* <Grid item xs={12} sm={6} md={4}>
-            <ProfileCard />
-          </Grid> */}
         </Grid>
       }
     </Grid>
