@@ -23,10 +23,12 @@ import store from "../../redux/store";
 function Signup() {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
   const [otpSendLoading, setOtpLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [nameerror, setNameerror] = useState(false);
   const [phoneerror, setPhoneerror] = useState(false);
+  const [gendererror, setGendererror] = useState(false);
   const history = useHistory();
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
@@ -61,6 +63,13 @@ function Signup() {
     } else {
       setPhoneerror(false);
     }
+    // if (gender.length !== 10) {
+    //   setGendererror(true);
+    //   return;
+    // } else {
+    //   setGendererror(false);
+    // }
+
     setOtpLoading(true);
     configureCaptcha();
     const auth = getAuth();
@@ -93,6 +102,7 @@ function Signup() {
     console.log("heree");
     console.log(phone);
     console.log(name);
+    // console.log(gender);
     onSignInSubmit();
   };
 
@@ -102,6 +112,11 @@ function Signup() {
   }
 
   function handleChangePhone(e) {
+    console.log(e.target.value);
+    setPhone(e.target.value);
+  }
+
+  function handleChangeGender(e) {
     console.log(e.target.value);
     setPhone(e.target.value);
   }
@@ -124,8 +139,8 @@ function Signup() {
           .then((result) => {
             console.log(result.data);
             localStorage.setItem("playerToken", result.data.token);
-            store.dispatch(setPlayerData(result.data.token))
-            history.push({pathname:'/'})
+            store.dispatch(setPlayerData(result.data.token));
+            history.push({ pathname: "/" });
             setVerifying(false);
           })
           .catch((err) => {
@@ -162,7 +177,13 @@ function Signup() {
             />
           </div>
           {invalidotp && (
-            <div style={{alignItems:'center',textAlign:'center',marginTop:9}}>
+            <div
+              style={{
+                alignItems: "center",
+                textAlign: "center",
+                marginTop: 9,
+              }}
+            >
               <label className="errorLabel">Invalid OTP !</label>
             </div>
           )}
@@ -199,6 +220,20 @@ function Signup() {
               <label className="errorLabel">Name must be valid !</label>
             </div>
           )}
+          <div className="GenderSelection">
+            <span>
+              <label for="maleGender">Male</label>
+              <input id="maleGender" type="radio" name="gender" value="male" />
+              <input
+                id="femaleGender"
+                type="radio"
+                name="gender"
+                value="female"
+              />
+              <i class="genderIcon"></i>
+              <label for="femaleGender">Female</label>
+            </span>
+          </div>
           <div class="Input">
             <input
               onChange={handleChangePhone}
