@@ -24,6 +24,7 @@ import useWindowDimensions from "../../Components/useWindowDimensions";
 import { randomColor } from "../../util/functions";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
 import PlayerCardExtra from "../../Components/PlayerCardExtra/playerExtraInfo";
+import PlayerCard from "../../Components/PlayerCard/playerCard";
 
 function PlayerProfile(props) {
   const match = useParams();
@@ -74,9 +75,12 @@ function PlayerProfile(props) {
   }, [])
 
   return (
-    <Grid container padding="15px">
+    <Grid container padding="30px">
       {!loading &&
         <Grid container spacing={4}>
+          <HorizontalBarChart  data={[1,2,3]}/>
+          {/* <PieChart /> */}
+          <PlayerCardExtra />
         </Grid>
       }
     </Grid>
