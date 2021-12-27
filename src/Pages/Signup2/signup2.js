@@ -19,25 +19,22 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setPlayerData } from "../../redux/player/playerActions";
 import store from "../../redux/store";
-import useWindowDimensions from "../../Components/useWindowDimensions";
-import male from "../../images/maleGender.png";
-import female from "../../images/femaleGender.png";
-
+import male from '../../images/male.png'
+import female from '../../images/female.png'
 
 function Signup() {
-  const { height, width } = useWindowDimensions();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
   const [otpSendLoading, setOtpLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [nameerror, setNameerror] = useState(false);
   const [phoneerror, setPhoneerror] = useState(false);
-  const [gendererror, setGendererror] = useState(false);
   const history = useHistory();
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [invalidotp, setInvalidotp] = useState(false);
+  const [gender, setGender] = useState('')
+  const [genderError, setGenderError] = useState(false)
   const [recaptcha, setRecaptcha] = useState(null)
 
   const configureCaptcha = () => {
@@ -68,13 +65,12 @@ function Signup() {
     } else {
       setPhoneerror(false);
     }
-    // if (gender.length !== 10) {
-    //   setGendererror(true);
-    //   return;
-    // } else {
-    //   setGendererror(false);
-    // }
-
+    if (gender.length === 0) {
+      setGenderError(true)
+      return;
+    } else {
+      setGenderError(false)
+    }
     setOtpLoading(true);
     const auth = getAuth();
     const phoneNumber = "+91" + phone;
@@ -106,7 +102,6 @@ function Signup() {
     console.log("heree");
     console.log(phone);
     console.log(name);
-    // console.log(gender);
     onSignInSubmit();
   };
 
@@ -116,11 +111,6 @@ function Signup() {
   }
 
   function handleChangePhone(e) {
-    console.log(e.target.value);
-    setPhone(e.target.value);
-  }
-
-  function handleChangeGender(e) {
     console.log(e.target.value);
     setPhone(e.target.value);
   }
@@ -160,6 +150,11 @@ function Signup() {
         setInvalidotp(true);
       });
   };
+
+  const changeGender = (gen) => {
+    setGender(gen)
+    setGenderError(false)
+  }
 
   return (
     <div id="signup-container" className="signupContainer">
@@ -234,34 +229,21 @@ function Signup() {
               </label>
             </div>
           )}
-          <div className="signupSpace GenderSelection">
-            <span>
-              <img
-                for="maleGender"
-                src={male}
-                style={{
-                  // height: width > 450 ? width / 8 : width / 4.5,
-                  // width: width > 450 ? width / 8 : width / 4.5,
-                  // borderRadius: width > 450 ? width / 18 : width / 9,
-                  // resize: "cover",
-                }}
-              />
-              <input className="Input" id="maleGender" type="radio" name="gender" value="male" />
-              
-              {/* <i class="genderIcon"></i> */}
-                <img
-                for="femaleGender"
-                src={female}
-                style={{
-                  // height: width > 450 ? width / 8 : width / 4.5,
-                  // width: width > 450 ? width / 8 : width / 4.5,
-                  // borderRadius: width > 450 ? width / 18 : width / 9,
-                  // resize: "cover",
-                }}
-              />
-              <input className="Input" id="femaleGender" type="radio" name="gender" value="female"/>            
-            </span>
+          <div style={{ alignItems: 'center', marginTop: 15, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <div onClick={() => changeGender("Male")} style={{ margin: 5, padding: 9, border: "1px solid #1da1f2", borderRadius: 15, backgroundColor: gender === "Male" && "rgba(29,161,242,0.1)" }}>
+              <img alt="Male" src={male} style={{ height: 35, width: 35 }} />
+            </div>
+            <div onClick={() => changeGender("Female")} style={{ margin: 5, padding: 9, border: "1px solid red", borderRadius: 15, backgroundColor: gender === "Female" && "rgba(255,0,0,0.1)" }}>
+              <img alt="Female" src={female} style={{ height: 35, width: 35 }} />
+            </div>
           </div>
+          {genderError && (
+            <div>
+              <label className="errorLabel">
+                Pick a Gender
+              </label>
+            </div>
+          )}
           <div style={{ marginTop: 15 }} id="recaptcha-container"></div>
           <div style={{ marginTop: 25 }}>
             <Button
@@ -275,12 +257,6 @@ function Signup() {
               SEND OTP
             </Button>
           </div>
-          {/* <PhoneInput
-          containerClass="phoneContainer"
-          country={"in"}
-          value={phone}
-          onChange={(phone) => setPhone(phone)}
-        /> */}
         </div>
       )}
     </div>

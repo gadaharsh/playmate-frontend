@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./login.css";
@@ -10,7 +10,7 @@ import {
   signInWithPhoneNumber,
   PhoneAuthProvider,
 } from "firebase/auth";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import { FormLabel } from "@mui/material";
@@ -19,6 +19,8 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { setPlayerData } from "../../redux/player/playerActions";
 import store from "../../redux/store";
+import male from '../../images/male.png'
+import female from '../../images/female.png'
 
 function Login() {
   const [phone, setPhone] = useState("");
@@ -31,44 +33,50 @@ function Login() {
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [invalidotp, setInvalidotp] = useState(false);
+  const [gender, setGender] = useState('')
+  const [genderError, setGenderError] = useState(false)
+  const [recaptcha, setRecaptcha] = useState(null)
 
   const configureCaptcha = () => {
     const auth = getAuth();
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          onSignInSubmit();
-        },
-      },
-      auth
-    );
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      size: 'normal',
+      callback: (res) => {
+        console.log(res, 'hmmmmmmmmm')
+      }
+    }, auth);
   };
+
+  useEffect(() => {
+    configureCaptcha()
+  }, [])
 
   const onSignInSubmit = (e) => {
     e.preventDefault();
-    // if (name.length < 3) {
-    //   setNameerror(true);
-    //   return;
-    // } else {
-    //   setNameerror(false);
-    // }
+    /* if (name.length < 3) {
+      setNameerror(true);
+      return;
+    } else {
+      setNameerror(false);
+    } */
     if (phone.length !== 10) {
       setPhoneerror(true);
       return;
     } else {
       setPhoneerror(false);
     }
+    /* if (gender.length === 0) {
+      setGenderError(true)
+      return;
+    } else {
+      setGenderError(false)
+    } */
     setOtpLoading(true);
-    configureCaptcha();
     const auth = getAuth();
     const phoneNumber = "+91" + phone;
     console.log(phoneNumber);
     const appVerifier = window.recaptchaVerifier;
     console.log(appVerifier);
-    console.log("hmmmm");
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
@@ -82,17 +90,18 @@ function Login() {
       })
       .catch((error) => {
         console.log("Otp not sent !");
+        console.log(error);
         // Error; SMS not sent
         // ...
         setOtpLoading(false);
       });
   };
 
-  const onPressLogin = () => {
+  const onPressSignup = () => {
     setOtpLoading(true);
     console.log("heree");
     console.log(phone);
-    // console.log(name);
+    console.log(name);
     onSignInSubmit();
   };
 
@@ -116,7 +125,6 @@ function Login() {
         const user = result.user;
         console.log(user);
         var player = {
-          name,
           contact: phone,
         };
         axios
@@ -125,12 +133,12 @@ function Login() {
             console.log(result.data);
             localStorage.setItem("playerToken", result.data.token);
             store.dispatch(setPlayerData(result.data.token))
-            history.push({pathname:'/'})
+            history.push({ pathname: '/' })
             setVerifying(false);
           })
           .catch((err) => {
             setVerifying(false);
-            console.log(err.response);
+            console.log(err.response.data);
           });
         // ...
       })
@@ -142,8 +150,13 @@ function Login() {
       });
   };
 
+  const changeGender = (gen) => {
+    setGender(gen)
+    setGenderError(false)
+  }
+
   return (
-    <div className="signupContainer">
+    <div id="signup-container" className="signupContainer">
       {otpSent ? (
         <div className="signupSpace">
           <div className="logoStyle">
@@ -162,7 +175,7 @@ function Login() {
             />
           </div>
           {invalidotp && (
-            <div style={{alignItems:'center',textAlign:'center',marginTop:9}}>
+            <div style={{ alignItems: 'center', textAlign: 'center', marginTop: 9 }}>
               <label className="errorLabel">Invalid OTP !</label>
             </div>
           )}
@@ -184,21 +197,6 @@ function Login() {
           <div className="logoStyle">
             <img src={logo} />
           </div>
-          {/* <div class="Input">
-            <input
-              value={name}
-              onChange={handleChangeName}
-              type="text"
-              id="name"
-              class="Input-text"
-              placeholder="Your first name"
-            ></input>
-          </div>
-          {nameerror && (
-            <div>
-              <label className="errorLabel">Name must be valid !</label>
-            </div>
-          )} */}
           <div class="Input">
             <input
               onChange={handleChangePhone}
@@ -215,6 +213,7 @@ function Login() {
               </label>
             </div>
           )}
+          <div style={{ marginTop: 15 }} id="recaptcha-container"></div>
           <div style={{ marginTop: 25 }}>
             <Button
               id="sign-in-button"
@@ -227,12 +226,6 @@ function Login() {
               SEND OTP
             </Button>
           </div>
-          {/* <PhoneInput
-          containerClass="phoneContainer"
-          country={"in"}
-          value={phone}
-          onChange={(phone) => setPhone(phone)}
-        /> */}
         </div>
       )}
     </div>

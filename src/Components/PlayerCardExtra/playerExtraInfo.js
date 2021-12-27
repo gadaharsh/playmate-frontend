@@ -54,7 +54,7 @@ function PlayerCardExtra(props) {
   return (
     <Paper /* variant="outlined" */ elevation={2}>
       <Grid conatiner /* backgroundColor="rgba(42,170,138,0.05)" */>
-        <Grid container marginTop="10px" paddingBottom="15px" spacing={2}>
+        <Grid container marginTop="15px" paddingTop="15px" paddingBottom="15px" spacing={1}>
           <Grid item xs={8} sm={12}>
             <Typography style={{ marginLeft: 15, marginBottom: 9 }}>More Details</Typography>
             <CustomButton title="All Organized Events" image={organize} onPress={onPressOrganized} />
