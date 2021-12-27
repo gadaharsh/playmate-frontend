@@ -76,7 +76,7 @@ function PlayerProfile(props) {
   }, []);
 
   return (
-    <Grid container padding="30px" spacing={2}>
+    <Grid container paddingLeft="15px" paddingRight="15px" spacing={2}>
       <Grid item xs={12} sm={8} md={9.5} order={{ xs: 2, sm: 1 }}>
         <Grid container>
           <Header title="Player Profile" />
