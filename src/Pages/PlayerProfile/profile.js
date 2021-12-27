@@ -78,7 +78,9 @@ function PlayerProfile(props) {
     <Grid container padding="30px">
       {!loading &&
         <Grid container spacing={4}>
-          <HorizontalBarChart  data={[1,2,3]}/>
+          <div className="col-md-4">
+          <HorizontalBarChart  value={values}   />
+          </div>
           {/* <PieChart /> */}
           <PlayerCardExtra />
         </Grid>
