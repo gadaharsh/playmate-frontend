@@ -98,6 +98,9 @@ function PlayerProfile(props) {
                 <div>
                   <PieChart label={labels1} value={values1} />
                 </div>
+                <div>
+                  <PlayerCardExtra />
+                </div>
               </Grid>
             )}
           </Paper>
@@ -113,7 +116,7 @@ function PlayerProfile(props) {
         order={{ xs: 1, sm: 2 }}
       >
         <PlayerCard />
-        <PlayerCardExtra />
+        {/* <PlayerCardExtra /> */}
 
         {/* <Box display="grid">
           <Box gridColumn="span 8">
@@ -123,7 +126,6 @@ function PlayerProfile(props) {
             <PlayerCardExtra />
           </Box>
         </Box> */}
-        
       </Grid>
     </Grid>
   );
