@@ -27,6 +27,10 @@ import { onBackgroundMessage } from "firebase/messaging/sw";
 import axios from "axios";
 import logo192 from '../src/images/logo192.png'
 import api from "./config/api";
+import { Modal } from "@mui/material";
+import React, { useState } from 'react'
+import NotifiedModal from "./Components/NotificationReceivedModal/NotificationRecModal";
+import Login from "./Pages/Login/login";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAnYnbHmFe2xXZEwtmVAokUxtooq3WnfVU",
@@ -65,6 +69,34 @@ const sendFcmToken = async (token) => {
 }
 
 const messaging = getMessaging();
+
+const askForPermission = () => {
+  console.log("Inside asking permission");
+  Notification.requestPermission().then(function (permission) {
+
+    getToken(messaging, { vapidKey: 'BMOuBQrCRXIjk_WcLJfbgAjPk4BlXTA1MEcENcSgsaqljXO3zgXgiiiBvC_S-zmWoulyULYHOF_J136Md-TCzNw' }).then((currentToken) => {
+      if (currentToken) {
+        // Send the token to your server and update the UI if necessary
+        console.log(currentToken)
+        sendFcmToken(currentToken)
+        // ...
+      } else {
+        console.log('No registration token available. Request permission to generate one.');
+        Notification.requestPermission()
+        // ...
+      }
+    }).catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+      // ...
+    });
+  });
+}
+
+if (Notification.permission !== "granted") {
+  //navigator.permissions.query({ name: 'push', userVisibleOnly: true })
+  askForPermission()
+}
+
 getToken(messaging, { vapidKey: 'BMOuBQrCRXIjk_WcLJfbgAjPk4BlXTA1MEcENcSgsaqljXO3zgXgiiiBvC_S-zmWoulyULYHOF_J136Md-TCzNw' }).then((currentToken) => {
   if (currentToken) {
     // Send the token to your server and update the UI if necessary
@@ -81,22 +113,6 @@ getToken(messaging, { vapidKey: 'BMOuBQrCRXIjk_WcLJfbgAjPk4BlXTA1MEcENcSgsaqljXO
   // ...
 });
 
-/* onMessage(messaging, (payload) => {
-  console.log('Message received. ', payload.notification);
-  // ...
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: logo192,
-  };
-
-  // eslint-disable-next-line no-restricted-globals
-  new Notification(
-    notificationTitle,
-    notificationOptions
-  );
-}); */
-
 const lat = localStorage.lat;
 if (lat) {
   console.log(lat)
@@ -112,10 +128,34 @@ if (lat) {
 }
 
 function App() {
+  const [newNot, setNewNot] = useState(false)
+  const [notTile, setNotTitle] = useState('')
+  const [notBody, setNotBody] = useState('')
+  const changeNot = () => {
+    setNewNot(false)
+  }
+  onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload.notification);
+    // ...
+    const notificationTitle = payload.notification.title;
+    const notificationOptions = {
+      body: payload.notification.body,
+      icon: logo192,
+    };
+    setNotTitle(notificationTitle)
+    setNotBody(payload.notification.body)
+    setNewNot(true)
+    // eslint-disable-next-line no-restricted-globals
+    /* new Notification(
+      notificationTitle,
+      notificationOptions
+    ); */
+  });
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <div className="App">
+          <NotifiedModal open={newNot} handleClose={changeNot} title={notTile} body={notBody} />
           <Router>
             <Navbar />
             <Switch>
@@ -124,6 +164,9 @@ function App() {
               </Route>
               <Route path="/signup">
                 <Signup2 />
+              </Route>
+              <Route path="/login">
+                <Login />
               </Route>
               <Route path="/event/:id">
                 <EventDetails />

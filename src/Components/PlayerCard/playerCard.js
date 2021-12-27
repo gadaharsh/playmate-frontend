@@ -23,6 +23,11 @@ import rejected from "../../images/rejected.png";
 import "./playerCard.css";
 import { useHistory, useLocation } from "react-router-dom";
 import CustomButton from "../CustomButton/customButton";
+import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import axios from "axios";
+import api from "../../config/api";
+import NotifyTurnOnModal from "../NotificationModal/NotificationTurnOnModal";
 
 function PlayerCard(props) {
   const { height, width } = useWindowDimensions();
@@ -93,8 +98,61 @@ function PlayerCard(props) {
     history.push({ pathname: "/signup" });
   }
 
+  const goToLogin = () => {
+    history.push({ pathname: "/login" });
+  }
+
+  const sendFcmToken = async (token) => {
+    var body = {
+      fcmToken: token
+    }
+    const playerToken = localStorage.playerToken;
+    if (playerToken) {
+      var config = {
+        headers: { Authorization: `Bearer ${playerToken}` },
+        "Content-Type": "application/json",
+      };
+      axios.post(`${api}/player/webFcmToken`, body, config).then(res => {
+        console.log(res.data);
+      }).catch(err => {
+        console.log(err.response)
+      })
+    }
+  }
+
+  const messaging = getMessaging();
+
+  const askForPermission = () => {
+    setNotModal(true)
+    console.log("Inside asking permission");
+    Notification.requestPermission().then(function (permission) {
+
+      getToken(messaging, { vapidKey: 'BMOuBQrCRXIjk_WcLJfbgAjPk4BlXTA1MEcENcSgsaqljXO3zgXgiiiBvC_S-zmWoulyULYHOF_J136Md-TCzNw' }).then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          console.log(currentToken)
+          sendFcmToken(currentToken)
+          // ...
+        } else {
+          console.log('No registration token available. Request permission to generate one.');
+          Notification.requestPermission()
+          // ...
+        }
+      }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
+      });
+    });
+  }
+
+  const [notModal, setNotModal] = useState(false)
+  const closeNotModal = () => {
+    setNotModal(false)
+  }
+
   return (
     <div className="user-sticky">
+      <NotifyTurnOnModal open={notModal} handleClose={closeNotModal} />
       <Paper /* variant="outlined" */ elevation={2}>
         <Grid conatiner /* backgroundColor="rgba(42,170,138,0.05)" */>
           {authenticated ? (
@@ -136,12 +194,28 @@ function PlayerCard(props) {
                   <Button onClick={goToSignup} variant="contained" style={{ backgroundColor: '#1da1f2' }}>Signup</Button>
                 </Grid>
                 <Grid item xs={5}>
-                  <Button onClick={goToSignup} variant="contained" style={{ backgroundColor: '#1da1f2' }}>Login</Button>
+                  <Button onClick={goToLogin} variant="contained" style={{ backgroundColor: '#1da1f2' }}>Login</Button>
                 </Grid>
               </Grid>
             </Grid>}
         </Grid>
       </Paper>
+      <div style={{ height: 15 }}></div>
+      {authenticated && Notification.permission !== "granted" && <Paper elevation={2}>
+        <Grid container padding="15px" >
+          <Grid item xs={2}>
+            <NotificationsOffIcon style={{ height: 35, width: 35 }} />
+          </Grid>
+          <Grid item xs={10}>
+            <Typography>Notifications have been turned Off</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <div onClick={askForPermission}>
+              <text style={{ textDecoration: 'underline' }}>Turn On Notification</text>
+            </div>
+          </Grid>
+        </Grid>
+      </Paper>}
     </div>
   );
 }
