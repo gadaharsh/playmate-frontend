@@ -127,6 +127,7 @@ function Signup() {
         var player = {
           name,
           contact: phone,
+          gender,
         };
         axios
           .post(`${url}/player/signup`, player)
