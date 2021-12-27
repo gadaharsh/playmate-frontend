@@ -25,6 +25,7 @@ import { randomColor } from "../../util/functions";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
 import PlayerCardExtra from "../../Components/PlayerCardExtra/playerExtraInfo";
 import PlayerCard from "../../Components/PlayerCard/playerCard";
+import Header from "../../Components/Header/header";
 
 function PlayerProfile(props) {
   const match = useParams();
@@ -75,21 +76,54 @@ function PlayerProfile(props) {
   }, []);
 
   return (
-    <Grid container padding="40px" spacing={2}>
+    <Grid container padding="30px" spacing={2}>
       <Grid item xs={12} sm={8} md={9.5} order={{ xs: 2, sm: 1 }}>
-        {!loading && (
-          <Grid container spacing={4}>
-            <div className="col-md-4">
-              <HorizontalBarChart value={values} />
-            </div>
-            <div className="col-md-4">
-              <PieChart label={labels1} value={values1} />
-            </div>
-            <div className="col-md-4">
-              <PlayerCardExtra />
-            </div>
-          </Grid>
-        )}
+        <Grid container>
+          <Header title="Player Profile" />
+          <Paper
+            elevation={0}
+            style={{
+              marginTop: 15,
+              padding: 20,
+              width: "100%",
+              overflow: "auto",
+              borderBottomWidth: 0,
+            }}
+          >
+            {!loading && (
+              <Grid container spacing={2}>
+                <div>
+                  <HorizontalBarChart value={values} />
+                </div>
+                <div>
+                  <PieChart label={labels1} value={values1} />
+                </div>
+              </Grid>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+
+      <Grid
+        marginTop="15px"
+        item
+        xs={12}
+        sm={4}
+        md={2.5}
+        order={{ xs: 1, sm: 2 }}
+      >
+        <PlayerCard />
+        <PlayerCardExtra />
+
+        {/* <Box display="grid">
+          <Box gridColumn="span 8">
+            <PlayerCard />
+          </Box>
+          <Box gridColumn="span 4">
+            <PlayerCardExtra />
+          </Box>
+        </Box> */}
+        
       </Grid>
     </Grid>
   );
