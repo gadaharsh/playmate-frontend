@@ -24,9 +24,9 @@ Find and Join sports event near you. Easily create and manage sports event. View
 #### -> Firebase
 
 ## Backend
-#### -> Express
-#### -> Firebase
-#### -> Mongodb
+#### - Express
+#### - Firebase
+#### - Mongodb
 
 ![](demo_images/d1.png)
 ![](demo_images/d2.png)
@@ -36,8 +36,8 @@ Find and Join sports event near you. Easily create and manage sports event. View
 ![](demo_images/d6.png)
 
 ## Members
-#### 1911122 Rushil
-#### 1911075 Harsh
+- 1911122 Rushil
+- 1911075 Harsh
 
 ## College: KJSCE
 ## Course: MERN
