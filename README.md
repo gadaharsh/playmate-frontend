@@ -19,11 +19,11 @@ Find and Join sports event near you. Easily create and manage sports event. View
 
 ## Technologies Used
 
-# Frontend
+## Frontend
 #### -> React
 #### -> Firebase
 
-# Backend
+## Backend
 #### -> Express
 #### -> Firebase
 #### -> Mongodb
