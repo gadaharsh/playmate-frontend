@@ -17,3 +17,7 @@ Find and Join sports event near you. Easily create and manage sports event. View
 #### -> Express
 #### -> Firebase
 #### -> Mongodb
+
+## Members
+#### 1911122 Rushil
+#### Harsh
