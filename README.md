@@ -26,12 +26,12 @@ Find and Join sports event near you. Easily create and manage sports event. View
 #### -> Firebase
 #### -> Mongodb
 
-![](demo_images/d1.PNG)
-![](demo_images/d2.PNG)
-![](demo_images/d3.PNG)
-![](demo_images/d4.PNG)
-![](demo_images/d5.PNG)
-![](demo_images/d6.PNG)
+![](demo_images/d1.png)
+![](demo_images/d2.png)
+![](demo_images/d3.png)
+![](demo_images/d4.png)
+![](demo_images/d5.png)
+![](demo_images/d6.png)
 
 ## Members
 #### 1911122 Rushil
