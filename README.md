@@ -10,10 +10,10 @@ Find and Join sports event near you. Easily create and manage sports event. View
 
 ## Standout Features
 
-#### Chartjs for charts
-#### Firebase for Push Notification
-#### Material UI For Responsiveness
-#### Location data through Mapbox
+#### -> Chartjs for charts
+#### -> Firebase for Push Notification
+#### -> Material UI For Responsiveness
+#### -> Location data through Mapbox
 
 ## Technologies Used
 
