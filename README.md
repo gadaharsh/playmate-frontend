@@ -2,6 +2,8 @@
 Find and Join sports event near you. Easily create and manage sports event. View your sports intrests and analysis.
 #### You can view the project at https://playmate.vercel.app/
 
+# Playmate Frontend
+
 ## Features
 #### -> Create, Share and Manage Sports Event
 #### -> Join Sport Events near you
@@ -39,3 +41,5 @@ Find and Join sports event near you. Easily create and manage sports event. View
 
 ## College: KJSCE
 ## Course: MERN
+
+## Playmate Backend Link: https://github.com/gadaharsh/playmate-backend
