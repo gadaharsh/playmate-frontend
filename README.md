@@ -8,6 +8,13 @@ Find and Join sports event near you. Easily create and manage sports event. View
 #### -> Get Notifications 3,6 and 12 hours before your joined event as a remainder.
 #### -> Analysis of your sports profile with different charts.
 
+## Standout Features
+
+#### Chartjs for charts
+#### Firebase for Push Notification
+#### Material UI For Responsiveness
+#### Location data through Mapbox
+
 ## Technologies Used
 
 # Frontend
